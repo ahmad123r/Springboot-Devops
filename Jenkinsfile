@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Build Application') {
+       /* stage('Build Application') {
             steps {
                 echo "Building the application..."
                 sh 'mvn clean package -DskipTests'
@@ -59,5 +59,5 @@ pipeline {
         failure {
             echo "Pipeline failed."
         }
-    }
+    }*/
 }
