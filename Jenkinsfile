@@ -10,7 +10,16 @@ pipeline {
     }
 
     stages {
-    
+        stage('Start Minikube') {
+            steps {
+                echo "Starting Minikube..."
+                bat '''
+                minikube delete || echo "No existing Minikube cluster to delete"
+                minikube start --driver=docker
+                minikube status
+                '''
+            }
+        }
 
         stage('Checkout') {
             steps {
@@ -46,7 +55,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Applying Kubernetes manifests..."
-                bat "kubectl apply -f ${KUBERNETES_CONFIG_PATH}"
+                bat '''
+                kubectl config use-context minikube
+                kubectl apply -f ${KUBERNETES_CONFIG_PATH}
+                '''
             }
         }
     }
