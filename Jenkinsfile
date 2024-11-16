@@ -16,7 +16,7 @@ pipeline {
         }
         
 
-       /* stage('Build Application') {
+        stage('Build Application') {
             steps {
                 echo "Building the application..."
                 sh 'mvn clean package -DskipTests'
@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
+       /* stage('Push to Docker Hub') {
             steps {
                 echo "Pushing Docker image to Docker Hub..."
                 withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
