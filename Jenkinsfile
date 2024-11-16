@@ -15,7 +15,7 @@ pipeline {
                 echo "Starting Minikube..."
                 bat '''
                 minikube delete || echo "No existing Minikube cluster to delete"
-                minikube start --driver=docker
+                minikube start
                 minikube status
                 '''
             }
