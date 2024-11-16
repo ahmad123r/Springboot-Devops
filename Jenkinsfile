@@ -57,7 +57,7 @@ pipeline {
                 echo "Applying Kubernetes manifests..."
                 bat '''
                 kubectl config use-context minikube
-                kubectl apply -f ${KUBERNETES_CONFIG_PATH}
+                kubectl apply -f k8s-manifest.yaml
                 '''
             }
         }
