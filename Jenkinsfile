@@ -7,16 +7,28 @@ pipeline {
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
         DOCKERHUB_CREDENTIALS_USR = "ahmadzero___@hotmail.com"
         DOCKER_PASSWORD = "2995762+-1"
+        MINIKUBE_CONTEXT = "minikube"
     }
 
     stages {
-        stage('Start Minikube') {
+		stage('Start Minikube') {
+		    steps {
+		        echo "Starting Minikube..."
+		        bat '''
+		        docker pull gcr.io/k8s-minikube/kicbase:v0.0.45
+		        minikube delete || echo "No existing Minikube cluster to delete"
+		        minikube start --base-image=gcr.io/k8s-minikube/kicbase:v0.0.45 --driver=docker
+		        minikube status
+		        '''
+		    }
+		}
+
+        stage('Setup kubectl Context') {
             steps {
-                echo "Starting Minikube..."
+                echo "Configuring kubectl context..."
                 bat '''
-                minikube delete || echo "No existing Minikube cluster to delete"
-                minikube start
-                minikube status
+                kubectl config use-context ${MINIKUBE_CONTEXT}
+                kubectl get nodes
                 '''
             }
         }
@@ -31,7 +43,8 @@ pipeline {
         stage('Build Application') {
             steps {
                 echo "Building the application..."
-                //bat 'mvn clean package -DskipTests'
+                // Uncomment the following line if you use Maven
+                // bat 'mvn clean package -DskipTests'
             }
         }
 
@@ -56,8 +69,27 @@ pipeline {
             steps {
                 echo "Applying Kubernetes manifests..."
                 bat '''
-                kubectl config use-context minikube
-                kubectl apply -f k8s-manifest.yaml
+                kubectl apply -f ${KUBERNETES_CONFIG_PATH}
+                kubectl get all
+                '''
+            }
+        }
+
+        stage('Expose Service') {
+            steps {
+                echo "Exposing the application as a service..."
+                bat '''
+                kubectl expose deployment suspicious-events-detector --type=NodePort --port=8080
+                kubectl get service
+                '''
+            }
+        }
+
+        stage('Get Service URL') {
+            steps {
+                echo "Retrieving Minikube service URL..."
+                bat '''
+                minikube service suspicious-events-detector --url
                 '''
             }
         }
@@ -69,10 +101,10 @@ pipeline {
             cleanWs()
         }
         success {
-            echo "Pipeline executed successfully!"
+            echo "Pipeline executed successfully! Ready for testing."
         }
         failure {
-            echo "Pipeline failed."
+            echo "Pipeline failed. Check logs for details."
         }
     }
 }
