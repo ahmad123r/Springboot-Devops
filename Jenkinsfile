@@ -35,8 +35,10 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                echo "Pushing Docker image to Docker Hub..."
-               bat "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW" 
+				echo "wlecome to pushing your image ..."
+				 bat """
+            echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+            """
 		               bat "docker push ahmad201218/suspicious-events-detector:latest"
             }
         } /*
