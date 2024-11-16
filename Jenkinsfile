@@ -11,6 +11,16 @@ pipeline {
     }
 
     stages {
+		
+		
+		  stages {
+        stage('Start Minikube') {
+            steps {
+                echo "Starting Minikube..."
+                bat 'minikube start --driver=docker'
+                bat 'kubectl config use-context minikube'
+            }
+        }
         stage('Checkout') {
             steps {
                 echo "Checking out code..."
