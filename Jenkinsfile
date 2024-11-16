@@ -7,13 +7,9 @@ pipeline {
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
         DOCKERHUB_CREDENTIALS_USR = "ahmadzero___@hotmail.com"
         DOCKER_PASSWORD = "2995762+-1"
-        
     }
 
     stages {
-		
-		
-		  stages {
         stage('Start Minikube') {
             steps {
                 echo "Starting Minikube..."
@@ -21,19 +17,18 @@ pipeline {
                 bat 'kubectl config use-context minikube'
             }
         }
-        }
+
         stage('Checkout') {
             steps {
                 echo "Checking out code..."
                 checkout scm
             }
         }
-        
 
         stage('Build Application') {
             steps {
                 echo "Building the application..."
-               // sh 'mvn clean package -DskipTests'
+                //bat 'mvn clean package -DskipTests'
             }
         }
 
@@ -46,20 +41,18 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-				echo "wlecome to pushing your image ..."
-			 bat """
-            echo ${DOCKER_PASSWORD}| docker login -u ahmadzero___@hotmail.com --password-stdin
-            """
-		               bat "docker push ahmad201218/suspicious-events-detector:latest"
+                echo "Logging in to Docker Hub and pushing the image..."
+                bat """
+                echo ${DOCKER_PASSWORD} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin
+                docker push ${DOCKER_IMAGE}
+                """
             }
-        } 
+        }
 
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Applying Kubernetes manifests..."
-                bat """
-                kubectl apply -f ${KUBERNETES_CONFIG_PATH}
-                """
+                bat "kubectl apply -f ${KUBERNETES_CONFIG_PATH}"
             }
         }
     }
