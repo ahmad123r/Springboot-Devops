@@ -46,7 +46,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Applying Kubernetes manifests..."
-                sh """
+                bat """
                 kubectl apply -f ${KUBERNETES_CONFIG_PATH}
                 """
             }
