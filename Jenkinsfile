@@ -6,7 +6,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
         DOCKERHUB_CREDENTIALS_USR = "ahmadzero___@hotmail.com"
-        DOCKERHUB_CREDENTIALS_PSW = "2995762+-1"
+        DOCKER_PASSWORD = "2995762+-1"
         
     }
 
@@ -36,8 +36,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
 				echo "wlecome to pushing your image ..."
-				 bat """
-            echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+			 bat """
+            echo ${DOCKER_PASSWORD}| docker login -u ahmadzero___@hotmail.com --password-stdin
             """
 		               bat "docker push ahmad201218/suspicious-events-detector:latest"
             }
