@@ -14,6 +14,7 @@ pipeline {
                 checkout scm
             }
         }
+        
 
        /* stage('Build Application') {
             steps {
@@ -46,9 +47,9 @@ pipeline {
                 """
             }
         }
-    }
+    */}
 
-    post {
+   /* post {
         always {
             echo "Cleaning up workspace..."
             cleanWs()
