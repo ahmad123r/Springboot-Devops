@@ -16,7 +16,7 @@ import java.util.Date;
 @Getter
 @Entity
 @ToString(callSuper = true)
-@Table(name="event")
+@Table(name="event",schema = "detecor")
 public class EventResponse {
 
 	@Id
