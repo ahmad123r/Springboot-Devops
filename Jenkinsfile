@@ -5,8 +5,8 @@ pipeline {
         DOCKER_IMAGE = "ahmad201218/suspicious-events-detector:latest"
         DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
-        DOCKERHUB_CREDENTIALS_USR:ahmad201218
-        DOCKERHUB_CREDENTIALS_PSW:a2995762+-1
+        DOCKERHUB_CREDENTIALS_USR = "ahmad201218"
+        DOCKERHUB_CREDENTIALS_PSW = "a2995762+-1"
         
     }
 
