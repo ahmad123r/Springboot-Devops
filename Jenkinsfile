@@ -41,7 +41,7 @@ pipeline {
             """
 		               bat "docker push ahmad201218/suspicious-events-detector:latest"
             }
-        } /*
+        } 
 
         stage('Deploy to Kubernetes') {
             steps {
@@ -51,9 +51,9 @@ pipeline {
                 """
             }
         }
-    */}
+    }
 
-   /* post {
+    post {
         always {
             echo "Cleaning up workspace..."
             cleanWs()
@@ -64,5 +64,5 @@ pipeline {
         failure {
             echo "Pipeline failed."
         }
-    }*/
+    }
 }
