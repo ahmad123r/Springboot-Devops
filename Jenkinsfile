@@ -6,7 +6,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
         DOCKERHUB_CREDENTIALS_USR = "ahmad201218"
-        DOCKERHUB_CREDENTIALS_PSW = "a2995762+-1"
+        DOCKERHUB_CREDENTIALS_PSW = "2995762+-1"
         
     }
 
