@@ -5,6 +5,9 @@ pipeline {
         DOCKER_IMAGE = "ahmad201218/suspicious-events-detector:latest"
         DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
         KUBERNETES_CONFIG_PATH = "k8s-manifest.yaml"
+        DOCKERHUB_CREDENTIALS_USR:ahmad201218
+        DOCKERHUB_CREDENTIALS_PSW:a2995762+-1
+        
     }
 
     stages {
@@ -33,9 +36,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 echo "Pushing Docker image to Docker Hub..."
-                withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
-                    bat "docker push ${DOCKER_IMAGE}"
-                }
+               bat "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW" 
+		               bat "docker push ahmad201218/suspicious-events-detector:latest"
             }
         } /*
 
