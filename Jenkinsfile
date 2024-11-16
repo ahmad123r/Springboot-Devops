@@ -30,14 +30,14 @@ pipeline {
             }
         }
 
-       /* stage('Push to Docker Hub') {
+        stage('Push to Docker Hub') {
             steps {
                 echo "Pushing Docker image to Docker Hub..."
                 withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
-                    sh "docker push ${DOCKER_IMAGE}"
+                    bat "docker push ${DOCKER_IMAGE}"
                 }
             }
-        }
+        } /*
 
         stage('Deploy to Kubernetes') {
             steps {
