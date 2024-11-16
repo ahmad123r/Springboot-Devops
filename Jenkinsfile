@@ -21,6 +21,7 @@ pipeline {
                 bat 'kubectl config use-context minikube'
             }
         }
+        }
         stage('Checkout') {
             steps {
                 echo "Checking out code..."
